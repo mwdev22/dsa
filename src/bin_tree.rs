@@ -1,4 +1,5 @@
 
+
 #[derive(Debug)]
 pub struct Node {
     val: u32,
@@ -31,6 +32,45 @@ impl BinaryTree {
             // assign new node as root
             None => {
                 self.root = Some(new_node);
+            }
+        }
+    }
+
+    pub fn delete(&mut self, val: u32){
+        match self.root {
+            Some(ref mut node) => {
+                BinaryTree::remove(node, val); // Assuming this method removes the node with value `val`
+            }
+            None => {
+               panic!("Tree doesn't have root!")
+            }
+        }
+    }
+    
+    fn remove(node: &mut Box<Node>, val: u32) {
+        println!("node val {}",node.val);
+        if node.val == val {
+            println!("Deleted value {val} from the tree!")  
+        }
+        else {
+            if node.val > val {
+               match node.left {
+                Some(ref mut left) => {
+                    BinaryTree::remove(left, val)
+                }
+                None => {
+                    println!("Value {val} not fount in the tree!")
+                }
+               }
+            }else {
+                match node.right {
+                    Some(ref mut right) => {
+                        BinaryTree::remove(right, val)
+                    }
+                    None => {
+                        println!("Value {val} not found in the tree!")           
+                    }
+                }
             }
         }
     }
